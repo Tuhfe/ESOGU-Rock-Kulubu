@@ -50,7 +50,6 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-<!-- Cookie Banner -->
 <div id="cookieBanner" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[var(--color-gray-secondary)] text-white p-4 rounded shadow-lg flex items-center space-x-4 z-50">
   <span>Bu site çerez kullanmaktadır. Devam ederek kabul etmiş olursunuz.</span>
   <button id="acceptCookies" class="bg-[var(--color-rock-red)] px-3 py-1 rounded font-semibold hover:bg-red-700 transition">Kabul Et</button>
@@ -106,7 +105,6 @@
 <section id="etkinlikler" class="container mx-auto px-4 py-12">
   <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Yaklaşan Etkinlikler</h2>
   <div id="upcomingEvents" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-
   <h3 class="text-3xl font-archivo-black text-[var(--color-rock-red)] mt-16 mb-6">Geçmiş Etkinlikler</h3>
   <div id="pastEvents" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
 </section>
@@ -181,115 +179,6 @@
   </div>
 </footer>
 
-<script>
-  // Mobile menu toggle
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  mobileMenuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-
-  // Cookie banner
-  const cookieBanner = document.getElementById('cookieBanner');
-  const acceptCookiesBtn = document.getElementById('acceptCookies');
-  if(localStorage.getItem('cookiesAccepted') === 'true') {
-    cookieBanner.style.display = 'none';
-  }
-  acceptCookiesBtn.addEventListener('click', () => {
-    localStorage.setItem('cookiesAccepted', 'true');
-    cookieBanner.style.display = 'none';
-  });
-
-  // Admin login buttons
-  const adminLoginBtn = document.getElementById('adminLoginBtn');
-  const adminLoginBtnMobile = document.getElementById('adminLoginBtnMobile');
-
-  adminLoginBtnMobile?.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
-    openAdminLogin();
-  });
-  adminLoginBtn.addEventListener('click', openAdminLogin);
-
-  // Menüdeki tüm linklere yumuşak kaydırma
-  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetID = this.getAttribute('href').substring(1);
-      const targetElement = document.getElementById(targetID);
-      if(targetElement) {
-        // Mobil menüyü kapat (mobilde menü açıksa)
-        if(mobileMenu && !mobileMenu.classList.contains('hidden')) {
-          mobileMenu.classList.add('hidden');
-        }
-        // Yumuşak kaydırma
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-
-  // Countdown placeholder (etkinlik yüklenince güncelleniyor)
-  function countdown(eventDate) {
-    const countdownEl = document.getElementById('countdown');
-    function update() {
-      const now = new Date();
-      const diff = eventDate - now;
-      if(diff <= 0) {
-        countdownEl.textContent = "En yakın etkinlik başladı!";
-        clearInterval(interval);
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      countdownEl.textContent = `En yakın etkinliğe kalan süre: ${days}g ${hours}s ${minutes}d ${seconds}s`;
-    }
-    update();
-    const interval = setInterval(update, 1000);
-  }
-
-  // Yönetici Girişi açılır pencere fonksiyonu
-  function openAdminLogin() {
-    const loginHtml = `
-      <div id="adminLoginOverlay" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-        <div class="bg-[var(--color-gray-secondary)] p-8 rounded max-w-sm w-full">
-          <h3 class="text-[var(--color-rock-red)] text-2xl font-archivo-black mb-4">Yönetici Girişi</h3>
-          <form id="adminLoginForm" class="flex flex-col space-y-4">
-            <input type="text" id="adminUser" placeholder="Kullanıcı Adı" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
-            <input type="password" id="adminPass" placeholder="Şifre" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
-            <div class="flex justify-end space-x-2">
-              <button type="button" id="cancelAdminLogin" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700 transition">İptal</button>
-              <button type="submit" class="bg-[var(--color-rock-red)] px-4 py-2 rounded hover:bg-red-700 transition text-white font-bold">Giriş</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', loginHtml);
-
-    const adminLoginForm = document.getElementById('adminLoginForm');
-    const cancelBtn = document.getElementById('cancelAdminLogin');
-    const overlay = document.getElementById('adminLoginOverlay');
-
-    cancelBtn.addEventListener('click', () => {
-      overlay.remove();
-    });
-
-    adminLoginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const user = document.getElementById('adminUser').value.trim();
-      const pass = document.getElementById('adminPass').value.trim();
-      if(user === 'admin' && pass === 'rock2025') {
-        alert('Giriş başarılı! Yönetici paneli yakında eklenecek.');
-        overlay.remove();
-      } else {
-        alert('Hatalı kullanıcı adı veya şifre.');
-      }
-    });
-  }
-</script>
-
-</body>
 <div id="adminPanel" class="hidden fixed inset-0 bg-black bg-opacity-90 text-white z-60 overflow-auto p-6">
   <div class="max-w-4xl mx-auto bg-[var(--color-gray-secondary)] rounded-lg p-6 relative">
     <button id="adminLogoutBtn" class="absolute top-4 right-4 bg-[var(--color-rock-red)] px-3 py-1 rounded hover:bg-red-700 transition font-bold">Çıkış Yap</button>
@@ -311,38 +200,144 @@
     </section>
   </div>
 </div>
-
 <script>
-  // Yönetici panelini yönetmek için global değişken
-  let isAdminLoggedIn = false;
+let isAdminLoggedIn = false;
 
-  // Yönetici giriş fonksiyonunu
-  function openAdminLogin() {
-    const loginHtml = `
-      <div id="adminLoginOverlay" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-        <div class="bg-[var(--color-gray-secondary)] p-8 rounded max-w-sm w-full">
-          <h3 class="text-[var(--color-rock-red)] text-2xl font-archivo-black mb-4">Yönetici Girişi</h3>
-          <form id="adminLoginForm" class="flex flex-col space-y-4">
-            <input type="text" id="adminUser" placeholder="Kullanıcı Adı" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
-            <input type="password" id="adminPass" placeholder="Şifre" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
-            <div class="flex justify-end space-x-2">
-              <button type="button" id="cancelAdminLogin" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700 transition">İptal</button>
-              <button type="submit" class="bg-[var(--color-rock-red)] px-4 py-2 rounded hover:bg-red-700 transition text-white font-bold">Giriş</button>
-            </div>
-          </form>
-        </div>
-      </div>
+const cookieBanner = document.getElementById('cookieBanner');
+const acceptCookiesBtn = document.getElementById('acceptCookies');
+if(localStorage.getItem('cookiesAccepted') === 'true') {
+  cookieBanner.style.display = 'none';
+}
+acceptCookiesBtn.addEventListener('click', () => {
+  localStorage.setItem('cookiesAccepted', 'true');
+  cookieBanner.style.display = 'none';
+});
+
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+if (mobileMenuBtn) {
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+}
+
+document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetID = this.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetID);
+    if(targetElement) {
+      if(mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+function countdown(eventDate) {
+  const countdownEl = document.getElementById('countdown');
+  function update() {
+    const now = new Date();
+    const diff = eventDate - now;
+    if(diff <= 0) {
+      if (countdownEl) countdownEl.textContent = "En yakın etkinlik başladı!";
+      clearInterval(interval);
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    if (countdownEl) countdownEl.textContent = `En yakın etkinliğe kalan süre: ${days}g ${hours}s ${minutes}d ${seconds}s`;
+  }
+  update();
+  const interval = setInterval(update, 1000);
+}
+
+function getEvents() {
+  const eventsJSON = localStorage.getItem('esoguRockEvents');
+  if(!eventsJSON) return [];
+  try {
+    return JSON.parse(eventsJSON);
+  } catch {
+    return [];
+  }
+}
+
+function saveEvents(events) {
+  localStorage.setItem('esoguRockEvents', JSON.stringify(events));
+}
+
+function renderEvents() {
+  const events = getEvents().sort((a, b) => new Date(a.date) - new Date(b.date));
+  const upcomingEventsEl = document.getElementById('upcomingEvents');
+  const pastEventsEl = document.getElementById('pastEvents');
+  if (!upcomingEventsEl || !pastEventsEl) return;
+  upcomingEventsEl.innerHTML = '';
+  pastEventsEl.innerHTML = '';
+
+  const now = new Date();
+  let firstUpcomingEvent = null;
+
+  events.forEach(event => {
+    const eventDate = new Date(event.date);
+    const isUpcoming = eventDate >= now;
+    const container = document.createElement('div');
+    container.className = 'bg-[var(--color-gray-secondary)] p-6 rounded shadow-lg';
+    container.innerHTML = `
+      <h4 class="text-2xl font-bold mb-2 text-[var(--color-rock-red)]">${event.title}</h4>
+      <p class="text-gray-400"><strong>Tarih:</strong> ${event.date}</p>
+      ${event.description ? `<p class="mt-2 text-gray-300">${event.description}</p>` : ''}
     `;
-    document.body.insertAdjacentHTML('beforeend', loginHtml);
 
-    const adminLoginForm = document.getElementById('adminLoginForm');
-    const cancelBtn = document.getElementById('cancelAdminLogin');
-    const overlay = document.getElementById('adminLoginOverlay');
+    if (isUpcoming) {
+      upcomingEventsEl.appendChild(container);
+      if (!firstUpcomingEvent) {
+        firstUpcomingEvent = eventDate;
+      }
+    } else {
+      pastEventsEl.appendChild(container);
+    }
+  });
 
+  if (firstUpcomingEvent) {
+    countdown(firstUpcomingEvent);
+  } else {
+    const countdownEl = document.getElementById('countdown');
+    if (countdownEl) countdownEl.textContent = "Yaklaşan etkinlik yok.";
+  }
+}
+
+function openAdminLogin() {
+  const loginHtml = `
+    <div id="adminLoginOverlay" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
+      <div class="bg-[var(--color-gray-secondary)] p-8 rounded max-w-sm w-full">
+        <h3 class="text-[var(--color-rock-red)] text-2xl font-archivo-black mb-4">Yönetici Girişi</h3>
+        <form id="adminLoginForm" class="flex flex-col space-y-4">
+          <input type="text" id="adminUser" placeholder="Kullanıcı Adı" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+          <input type="password" id="adminPass" placeholder="Şifre" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+          <div class="flex justify-end space-x-2">
+            <button type="button" id="cancelAdminLogin" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700 transition">İptal</button>
+            <button type="submit" class="bg-[var(--color-rock-red)] px-4 py-2 rounded hover:bg-red-700 transition text-white font-bold">Giriş</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', loginHtml);
+
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const cancelBtn = document.getElementById('cancelAdminLogin');
+  const overlay = document.getElementById('adminLoginOverlay');
+
+  if (cancelBtn) {
     cancelBtn.addEventListener('click', () => {
       overlay.remove();
     });
+  }
 
+  if (adminLoginForm) {
     adminLoginForm.addEventListener('submit', e => {
       e.preventDefault();
       const user = document.getElementById('adminUser').value.trim();
@@ -357,80 +352,79 @@
       }
     });
   }
+}
 
-  // Yönetici panelini göster
-  function showAdminPanel() {
-    const adminPanel = document.getElementById('adminPanel');
-    if(!adminPanel) return;
-    adminPanel.classList.remove('hidden');
-    loadEventsToAdminList();
+function showAdminPanel() {
+  const adminPanel = document.getElementById('adminPanel');
+  if(!adminPanel) return;
+  adminPanel.classList.remove('hidden');
+  loadEventsToAdminList();
+}
+
+function hideAdminPanel() {
+  const adminPanel = document.getElementById('adminPanel');
+  if(!adminPanel) return;
+  adminPanel.classList.add('hidden');
+  isAdminLoggedIn = false;
+}
+
+function loadEventsToAdminList() {
+  const eventListEl = document.getElementById('adminEventList');
+  if(!eventListEl) return;
+  const events = getEvents();
+  eventListEl.innerHTML = '';
+  if(events.length === 0) {
+    eventListEl.innerHTML = '<li class="text-gray-400">Kayıtlı etkinlik yok.</li>';
+    return;
   }
+  events.forEach((event, index) => {
+    const li = document.createElement('li');
+    li.className = 'bg-black p-3 rounded flex justify-between items-center border border-gray-700';
+    li.innerHTML = `
+      <div>
+        <h4 class="font-bold text-[var(--color-rock-red)]">${event.title}</h4>
+        <p class="text-sm text-gray-300">${event.date}</p>
+        <p class="text-gray-400">${event.description || ''}</p>
+      </div>
+      <button data-index="${index}" class="deleteEventBtn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition">Sil</button>
+    `;
+    eventListEl.appendChild(li);
+  });
 
-  // Yönetici panelini gizle
-  function hideAdminPanel() {
-    const adminPanel = document.getElementById('adminPanel');
-    if(!adminPanel) return;
-    adminPanel.classList.add('hidden');
-    isAdminLoggedIn = false;
-  }
-
-  // LocalStorage'dan etkinlikleri al
-  function getEvents() {
-    const eventsJSON = localStorage.getItem('esoguRockEvents');
-    if(!eventsJSON) return [];
-    try {
-      return JSON.parse(eventsJSON);
-    } catch {
-      return [];
-    }
-  }
-
-  // LocalStorage'a etkinlikleri kaydet
-  function saveEvents(events) {
-    localStorage.setItem('esoguRockEvents', JSON.stringify(events));
-  }
-
-  // Admin panelde etkinlik listesini güncelle
-  function loadEventsToAdminList() {
-    const eventListEl = document.getElementById('adminEventList');
-    if(!eventListEl) return;
-    const events = getEvents();
-    eventListEl.innerHTML = '';
-    if(events.length === 0) {
-      eventListEl.innerHTML = '<li class="text-gray-400">Kayıtlı etkinlik yok.</li>';
-      return;
-    }
-    events.forEach((event, index) => {
-      const li = document.createElement('li');
-      li.className = 'bg-black p-3 rounded flex justify-between items-center border border-gray-700';
-      li.innerHTML = `
-        <div>
-          <h4 class="font-bold text-[var(--color-rock-red)]">${event.title}</h4>
-          <p class="text-sm text-gray-300">${event.date}</p>
-          <p class="text-gray-400">${event.description || ''}</p>
-        </div>
-        <button data-index="${index}" class="deleteEventBtn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition">Sil</button>
-      `;
-      eventListEl.appendChild(li);
+  eventListEl.querySelectorAll('.deleteEventBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-index'));
+      if(isNaN(idx)) return;
+      let events = getEvents();
+      events.splice(idx, 1);
+      saveEvents(events);
+      loadEventsToAdminList();
+      renderEvents();
+      alert('Etkinlik silindi.');
     });
+  });
+}
 
-    // Sil butonlarına tıklandığında etkinliği sil
-    eventListEl.querySelectorAll('.deleteEventBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.getAttribute('data-index'));
-        if(isNaN(idx)) return;
-        let events = getEvents();
-        events.splice(idx, 1);
-        saveEvents(events);
-        loadEventsToAdminList();
-        alert('Etkinlik silindi.');
-      });
-    });
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  renderEvents();
 
-  // Etkinlik ekleme formu işlemleri
+  const adminLoginBtn = document.getElementById('adminLoginBtn');
+  const adminLoginBtnMobile = document.getElementById('adminLoginBtnMobile');
   const adminAddEventForm = document.getElementById('adminAddEventForm');
-  if(adminAddEventForm) {
+  const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+
+  if (adminLoginBtnMobile) {
+    adminLoginBtnMobile.addEventListener('click', () => {
+      if (mobileMenu) mobileMenu.classList.add('hidden');
+      openAdminLogin();
+    });
+  }
+
+  if (adminLoginBtn) {
+    adminLoginBtn.addEventListener('click', openAdminLogin);
+  }
+
+  if (adminAddEventForm) {
     adminAddEventForm.addEventListener('submit', e => {
       e.preventDefault();
       if(!isAdminLoggedIn) {
@@ -450,54 +444,20 @@
       events.push({ title, date, description });
       saveEvents(events);
       loadEventsToAdminList();
-
-      // Formu temizle
+      renderEvents();
+      
       adminAddEventForm.reset();
       alert('Etkinlik başarıyla eklendi.');
     });
   }
 
-  // Çıkış butonu
-  const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-  if(adminLogoutBtn) {
+  if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', () => {
       hideAdminPanel();
       alert('Yönetici çıkışı yapıldı.');
     });
   }
-
-  // Eğer yukarıdaki elementler henüz yoksa, dinamik olarak event listener
-  document.addEventListener('click', e => {
-    if(e.target && e.target.id === 'adminLogoutBtn') {
-      hideAdminPanel();
-      alert('Yönetici çıkışı yapıldı.');
-    }
-  });
-
-  document.addEventListener('submit', e => {
-    if(e.target && e.target.id === 'adminAddEventForm') {
-      e.preventDefault();
-      if(!isAdminLoggedIn) {
-        alert('Önce giriş yapmalısınız.');
-        return;
-      }
-      const title = document.getElementById('eventTitle').value.trim();
-      const date = document.getElementById('eventDate').value;
-      const description = document.getElementById('eventDescription').value.trim();
-
-      if(!title || !date) {
-        alert('Lütfen etkinlik başlığı ve tarihini girin.');
-        return;
-      }
-
-      let events = getEvents();
-      events.push({ title, date, description });
-      saveEvents(events);
-      loadEventsToAdminList();
-
-      e.target.reset();
-      alert('Etkinlik başarıyla eklendi.');
-    }
-  });
+});
 </script>
+</body>
 </html>
