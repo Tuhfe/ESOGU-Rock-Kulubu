@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ESOGÜ Rock Kulübü — Kampüsün En Gürültülü Ailesi</title>
+<meta name="description" content="ESOGÜ Rock Kulübü resmi sitesi. Konserler, etkinlikler, jam sessionlar ve daha fazlası." />
+<meta property="og:title" content="ESOGÜ Rock Kulübü" />
+<meta property="og:description" content="Kampüsün en gürültülü ailesi ile müziği hisset!" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/images/og-image.jpg" />
+<link rel="icon" href="/favicon.ico" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Inter&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --color-black: #0B0B0B;
+    --color-rock-red: #E63946;
+    --color-gray-secondary: #1F2937;
+    --color-white: #F8F8F8;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+  h1,h2,h3,h4 {
+    font-family: 'Archivo Black', 'Anton', sans-serif;
+  }
+  a {
+    transition: color 0.3s;
+  }
+  a:hover {
+    color: var(--color-rock-red);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-rock-red);
+    border-radius: 10px;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- Cookie Banner -->
+<div id="cookieBanner" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[var(--color-gray-secondary)] text-white p-4 rounded shadow-lg flex items-center space-x-4 z-50">
+  <span>Bu site çerez kullanmaktadır. Devam ederek kabul etmiş olursunuz.</span>
+  <button id="acceptCookies" class="bg-[var(--color-rock-red)] px-3 py-1 rounded font-semibold hover:bg-red-700 transition">Kabul Et</button>
+</div>
+
+<header class="bg-[var(--color-black)] border-b border-[var(--color-gray-secondary)] sticky top-0 z-50">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="assets/images/rockclub-logo.jpeg" alt="ESOGÜ Rock Kulübü Logosu" class="h-10 w-auto rounded" loading="lazy" />
+      <span class="text-2xl font-archivo-black text-[var(--color-rock-red)]">ESOGÜ Rock Kulübü</span>
+    </a>
+    <nav class="hidden md:flex space-x-6 font-semibold text-[var(--color-white)]">
+      <a href="#anasayfa" class="hover:text-[var(--color-rock-red)]">Ana Sayfa</a>
+      <a href="#etkinlikler" class="hover:text-[var(--color-rock-red)]">Etkinlikler</a>
+      <a href="#hakkimizda" class="hover:text-[var(--color-rock-red)]">Hakkımızda</a>
+      <a href="#galeri" class="hover:text-[var(--color-rock-red)]">Galeri</a>
+      <a href="#medya" class="hover:text-[var(--color-rock-red)]">Medya</a>
+      <a href="#blog" class="hover:text-[var(--color-rock-red)]">Blog</a>
+      <a href="#iletisim" class="hover:text-[var(--color-rock-red)]">İletişim</a>
+      <a href="#uye-ol" class="hover:text-[var(--color-rock-red)]">Üye Ol</a>
+      <button id="adminLoginBtn" class="ml-4 bg-[var(--color-rock-red)] px-3 py-1 rounded text-white font-semibold hover:bg-red-700 transition">Yönetici Girişi</button>
+    </nav>
+    <button id="mobileMenuBtn" class="bg-[var(--color-rock-red)] px-3 py-1 rounded text-white font-semibold hover:bg-red-700 md:hidden">Menü</button>
+  </div>
+</header>
+
+<div id="mobileMenu" class="hidden bg-[var(--color-black)] border-b border-[var(--color-gray-secondary)] md:hidden">
+  <nav class="flex flex-col p-4 space-y-2 font-semibold text-[var(--color-white)]">
+    <a href="#anasayfa" class="hover:text-[var(--color-rock-red)]">Ana Sayfa</a>
+    <a href="#etkinlikler" class="hover:text-[var(--color-rock-red)]">Etkinlikler</a>
+    <a href="#hakkimizda" class="hover:text-[var(--color-rock-red)]">Hakkımızda</a>
+    <a href="#galeri" class="hover:text-[var(--color-rock-red)]">Galeri</a>
+    <a href="#medya" class="hover:text-[var(--color-rock-red)]">Medya</a>
+    <a href="#blog" class="hover:text-[var(--color-rock-red)]">Blog</a>
+    <a href="#iletisim" class="hover:text-[var(--color-rock-red)]">İletişim</a>
+    <a href="#uye-ol" class="hover:text-[var(--color-rock-red)]">Üye Ol</a>
+    <button id="adminLoginBtnMobile" class="bg-[var(--color-rock-red)] px-3 py-1 rounded text-white font-semibold hover:bg-red-700 transition mt-2">Yönetici Girişi</button>
+  </nav>
+</div>
+
+<section id="anasayfa" class="relative flex flex-col justify-center items-center text-center px-6 py-20 bg-cover bg-center" style="background-image: url('/assets/images/concert-bg.jpg'); min-height: 80vh;">
+  <div class="bg-[rgba(11,11,11,0.75)] p-8 rounded max-w-3xl">
+    <h1 class="text-5xl md:text-6xl font-anton font-bold mb-4 text-[var(--color-rock-red)] drop-shadow-lg">Müziği hisset, sahneye çık, kulübe katıl!</h1>
+    <p class="text-lg md:text-xl text-[var(--color-white)] mb-8">ESOGÜ Rock Kulübü — kampüsün en gürültülü ailesi.</p>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="#etkinlikler" class="bg-[var(--color-rock-red)] hover:bg-red-700 text-white font-bold py-3 px-6 rounded shadow-lg transition">Etkinlik Takvimine Git</a>
+      <a href="#uye-ol" class="border border-[var(--color-rock-red)] hover:bg-[var(--color-rock-red)] hover:text-white text-[var(--color-rock-red)] font-bold py-3 px-6 rounded shadow-lg transition">Bize Katıl</a>
+    </div>
+    <div id="countdown" class="mt-10 text-white font-mono text-2xl tracking-widest drop-shadow-lg"></div>
+  </div>
+</section>
+
+<section id="etkinlikler" class="container mx-auto px-4 py-12">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Yaklaşan Etkinlikler</h2>
+  <div id="upcomingEvents" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+  <h3 class="text-3xl font-archivo-black text-[var(--color-rock-red)] mt-16 mb-6">Geçmiş Etkinlikler</h3>
+  <div id="pastEvents" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+</section>
+
+<section id="hakkimizda" class="container mx-auto px-4 py-12 max-w-5xl">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Hakkımızda</h2>
+  <p class="text-gray-300 mb-8">
+    ESOGÜ Rock Kulübü, kampüsümüzde rock müziği sevenlerin buluşma noktasıdır. Amacımız, gençlerin müzikle özgürce ifade bulduğu bir ortam yaratmaktır.
+  </p>
+  <h3 class="text-3xl font-archivo-black text-[var(--color-rock-red)] mb-4">Yönetim Kadrosu</h3>
+  <div id="yonetimKadrosu" class="grid grid-cols-1 sm:grid-cols-3 gap-8"></div>
+</section>
+
+<section id="galeri" class="container mx-auto px-4 py-12">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Galeri</h2>
+  <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
+</section>
+
+<section id="medya" class="container mx-auto px-4 py-12 max-w-5xl">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Medya</h2>
+  <div class="space-y-8">
+    <div>
+      <h3 class="text-2xl font-bold mb-2 text-[var(--color-rock-red)]">YouTube Videoları</h3>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLexampleplaylist" title="YouTube Playlist" frameborder="0" allowfullscreen class="rounded shadow-lg"></iframe>
+    </div>
+    <div>
+      <h3 class="text-2xl font-bold mb-2 text-[var(--color-rock-red)]">Spotify Çalma Listeleri</h3>
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="380" frameborder="0" allow="encrypted-media" class="rounded shadow-lg"></iframe>
+    </div>
+  </div>
+</section>
+
+<section id="blog" class="container mx-auto px-4 py-12 max-w-5xl">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Blog</h2>
+  <div id="blogPosts" class="space-y-8"></div>
+</section>
+
+<section id="iletisim" class="container mx-auto px-4 py-12 max-w-md">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">İletişim</h2>
+  <p class="text-gray-300 mb-4">Bize ulaşmak için aşağıdaki kanalları kullanabilirsiniz:</p>
+  <ul class="flex space-x-6 text-[var(--color-rock-red)] text-3xl mb-6">
+    <li><a href="mailto:esogurock26@gmail.com" aria-label="E-posta" class="hover:text-red-700">📧</a></li>
+    <li><a href="https://www.instagram.com/rockesogu" target="_blank" rel="noopener" aria-label="Instagram" class="hover:text-red-700">📸</a></li>
+  </ul>
+  <form id="contactForm" action="https://formspree.io/f/yourFormID" method="POST" class="bg-[var(--color-gray-secondary)] p-6 rounded space-y-4">
+    <label class="block">
+      <span class="text-white font-semibold">İsim</span>
+      <input type="text" name="name" required class="w-full mt-1 p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+    </label>
+    <label class="block">
+      <span class="text-white font-semibold">E-posta</span>
+      <input type="email" name="_replyto" required class="w-full mt-1 p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+    </label>
+    <label class="block">
+      <span class="text-white font-semibold">Mesaj</span>
+      <textarea name="message" required rows="4" class="w-full mt-1 p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]"></textarea>
+    </label>
+    <button type="submit" class="w-full bg-[var(--color-rock-red)] hover:bg-red-700 text-white font-bold py-3 rounded transition">Gönder</button>
+  </form>
+</section>
+
+<section id="uye-ol" class="container mx-auto px-4 py-12 max-w-md text-center">
+  <h2 class="text-4xl font-archivo-black text-[var(--color-rock-red)] mb-6">Üye Ol</h2>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfc_gYgT-3iE8cl5LQ8tbJHSANwhGCU_t32cM1fYBtkKuO9Vg/viewform?usp=header" target="_blank" rel="noopener noreferrer" class="inline-block bg-[var(--color-rock-red)] hover:bg-red-700 text-white font-bold py-4 px-8 rounded shadow-lg transition">
+    Üyelik Formunu Doldur
+  </a>
+</section>
+
+<footer class="bg-[var(--color-black)] border-t border-[var(--color-gray-secondary)] py-6 mt-auto">
+  <div class="container mx-auto text-center text-gray-500 text-sm">
+    &copy; 2025 ESOGÜ Rock Kulübü. Tüm hakları saklıdır.
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Cookie banner
+  const cookieBanner = document.getElementById('cookieBanner');
+  const acceptCookiesBtn = document.getElementById('acceptCookies');
+  if(localStorage.getItem('cookiesAccepted') === 'true') {
+    cookieBanner.style.display = 'none';
+  }
+  acceptCookiesBtn.addEventListener('click', () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    cookieBanner.style.display = 'none';
+  });
+
+  // Admin login buttons
+  const adminLoginBtn = document.getElementById('adminLoginBtn');
+  const adminLoginBtnMobile = document.getElementById('adminLoginBtnMobile');
+
+  adminLoginBtnMobile?.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    openAdminLogin();
+  });
+  adminLoginBtn.addEventListener('click', openAdminLogin);
+
+  // Menüdeki tüm linklere yumuşak kaydırma
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetID = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetID);
+      if(targetElement) {
+        // Mobil menüyü kapat (mobilde menü açıksa)
+        if(mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        // Yumuşak kaydırma
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Countdown placeholder (etkinlik yüklenince güncelleniyor)
+  function countdown(eventDate) {
+    const countdownEl = document.getElementById('countdown');
+    function update() {
+      const now = new Date();
+      const diff = eventDate - now;
+      if(diff <= 0) {
+        countdownEl.textContent = "En yakın etkinlik başladı!";
+        clearInterval(interval);
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `En yakın etkinliğe kalan süre: ${days}g ${hours}s ${minutes}d ${seconds}s`;
+    }
+    update();
+    const interval = setInterval(update, 1000);
+  }
+
+  // Yönetici Girişi açılır pencere fonksiyonu
+  function openAdminLogin() {
+    const loginHtml = `
+      <div id="adminLoginOverlay" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
+        <div class="bg-[var(--color-gray-secondary)] p-8 rounded max-w-sm w-full">
+          <h3 class="text-[var(--color-rock-red)] text-2xl font-archivo-black mb-4">Yönetici Girişi</h3>
+          <form id="adminLoginForm" class="flex flex-col space-y-4">
+            <input type="text" id="adminUser" placeholder="Kullanıcı Adı" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+            <input type="password" id="adminPass" placeholder="Şifre" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+            <div class="flex justify-end space-x-2">
+              <button type="button" id="cancelAdminLogin" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700 transition">İptal</button>
+              <button type="submit" class="bg-[var(--color-rock-red)] px-4 py-2 rounded hover:bg-red-700 transition text-white font-bold">Giriş</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', loginHtml);
+
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const cancelBtn = document.getElementById('cancelAdminLogin');
+    const overlay = document.getElementById('adminLoginOverlay');
+
+    cancelBtn.addEventListener('click', () => {
+      overlay.remove();
+    });
+
+    adminLoginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const user = document.getElementById('adminUser').value.trim();
+      const pass = document.getElementById('adminPass').value.trim();
+      if(user === 'admin' && pass === 'rock2025') {
+        alert('Giriş başarılı! Yönetici paneli yakında eklenecek.');
+        overlay.remove();
+      } else {
+        alert('Hatalı kullanıcı adı veya şifre.');
+      }
+    });
+  }
+</script>
+
+</body>
+<div id="adminPanel" class="hidden fixed inset-0 bg-black bg-opacity-90 text-white z-60 overflow-auto p-6">
+  <div class="max-w-4xl mx-auto bg-[var(--color-gray-secondary)] rounded-lg p-6 relative">
+    <button id="adminLogoutBtn" class="absolute top-4 right-4 bg-[var(--color-rock-red)] px-3 py-1 rounded hover:bg-red-700 transition font-bold">Çıkış Yap</button>
+    <h2 class="text-3xl font-archivo-black mb-6 text-[var(--color-rock-red)]">Yönetici Paneli</h2>
+
+    <section id="adminEventSection" class="mb-8">
+      <h3 class="text-2xl font-bold mb-4">Etkinlik Ekle</h3>
+      <form id="adminAddEventForm" class="space-y-4">
+        <input type="text" id="eventTitle" placeholder="Etkinlik Başlığı" required class="w-full p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+        <input type="date" id="eventDate" required class="w-full p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+        <textarea id="eventDescription" placeholder="Etkinlik Açıklaması" rows="3" class="w-full p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]"></textarea>
+        <button type="submit" class="bg-[var(--color-rock-red)] hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition">Etkinlik Ekle</button>
+      </form>
+    </section>
+
+    <section id="adminEventListSection">
+      <h3 class="text-2xl font-bold mb-4">Kayıtlı Etkinlikler</h3>
+      <ul id="adminEventList" class="space-y-3 max-h-96 overflow-auto"></ul>
+    </section>
+  </div>
+</div>
+
+<script>
+  // Yönetici panelini yönetmek için global değişken
+  let isAdminLoggedIn = false;
+
+  // Yönetici giriş fonksiyonunu
+  function openAdminLogin() {
+    const loginHtml = `
+      <div id="adminLoginOverlay" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
+        <div class="bg-[var(--color-gray-secondary)] p-8 rounded max-w-sm w-full">
+          <h3 class="text-[var(--color-rock-red)] text-2xl font-archivo-black mb-4">Yönetici Girişi</h3>
+          <form id="adminLoginForm" class="flex flex-col space-y-4">
+            <input type="text" id="adminUser" placeholder="Kullanıcı Adı" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+            <input type="password" id="adminPass" placeholder="Şifre" required class="p-2 rounded bg-black text-white border border-gray-600 focus:outline-none focus:border-[var(--color-rock-red)]" />
+            <div class="flex justify-end space-x-2">
+              <button type="button" id="cancelAdminLogin" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700 transition">İptal</button>
+              <button type="submit" class="bg-[var(--color-rock-red)] px-4 py-2 rounded hover:bg-red-700 transition text-white font-bold">Giriş</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', loginHtml);
+
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const cancelBtn = document.getElementById('cancelAdminLogin');
+    const overlay = document.getElementById('adminLoginOverlay');
+
+    cancelBtn.addEventListener('click', () => {
+      overlay.remove();
+    });
+
+    adminLoginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const user = document.getElementById('adminUser').value.trim();
+      const pass = document.getElementById('adminPass').value.trim();
+      if(user === 'admin' && pass === 'rock2025') {
+        alert('Giriş başarılı! Yönetici paneli açılıyor.');
+        isAdminLoggedIn = true;
+        overlay.remove();
+        showAdminPanel();
+      } else {
+        alert('Hatalı kullanıcı adı veya şifre.');
+      }
+    });
+  }
+
+  // Yönetici panelini göster
+  function showAdminPanel() {
+    const adminPanel = document.getElementById('adminPanel');
+    if(!adminPanel) return;
+    adminPanel.classList.remove('hidden');
+    loadEventsToAdminList();
+  }
+
+  // Yönetici panelini gizle
+  function hideAdminPanel() {
+    const adminPanel = document.getElementById('adminPanel');
+    if(!adminPanel) return;
+    adminPanel.classList.add('hidden');
+    isAdminLoggedIn = false;
+  }
+
+  // LocalStorage'dan etkinlikleri al
+  function getEvents() {
+    const eventsJSON = localStorage.getItem('esoguRockEvents');
+    if(!eventsJSON) return [];
+    try {
+      return JSON.parse(eventsJSON);
+    } catch {
+      return [];
+    }
+  }
+
+  // LocalStorage'a etkinlikleri kaydet
+  function saveEvents(events) {
+    localStorage.setItem('esoguRockEvents', JSON.stringify(events));
+  }
+
+  // Admin panelde etkinlik listesini güncelle
+  function loadEventsToAdminList() {
+    const eventListEl = document.getElementById('adminEventList');
+    if(!eventListEl) return;
+    const events = getEvents();
+    eventListEl.innerHTML = '';
+    if(events.length === 0) {
+      eventListEl.innerHTML = '<li class="text-gray-400">Kayıtlı etkinlik yok.</li>';
+      return;
+    }
+    events.forEach((event, index) => {
+      const li = document.createElement('li');
+      li.className = 'bg-black p-3 rounded flex justify-between items-center border border-gray-700';
+      li.innerHTML = `
+        <div>
+          <h4 class="font-bold text-[var(--color-rock-red)]">${event.title}</h4>
+          <p class="text-sm text-gray-300">${event.date}</p>
+          <p class="text-gray-400">${event.description || ''}</p>
+        </div>
+        <button data-index="${index}" class="deleteEventBtn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition">Sil</button>
+      `;
+      eventListEl.appendChild(li);
+    });
+
+    // Sil butonlarına tıklandığında etkinliği sil
+    eventListEl.querySelectorAll('.deleteEventBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-index'));
+        if(isNaN(idx)) return;
+        let events = getEvents();
+        events.splice(idx, 1);
+        saveEvents(events);
+        loadEventsToAdminList();
+        alert('Etkinlik silindi.');
+      });
+    });
+  }
+
+  // Etkinlik ekleme formu işlemleri
+  const adminAddEventForm = document.getElementById('adminAddEventForm');
+  if(adminAddEventForm) {
+    adminAddEventForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if(!isAdminLoggedIn) {
+        alert('Önce giriş yapmalısınız.');
+        return;
+      }
+      const title = document.getElementById('eventTitle').value.trim();
+      const date = document.getElementById('eventDate').value;
+      const description = document.getElementById('eventDescription').value.trim();
+
+      if(!title || !date) {
+        alert('Lütfen etkinlik başlığı ve tarihini girin.');
+        return;
+      }
+
+      let events = getEvents();
+      events.push({ title, date, description });
+      saveEvents(events);
+      loadEventsToAdminList();
+
+      // Formu temizle
+      adminAddEventForm.reset();
+      alert('Etkinlik başarıyla eklendi.');
+    });
+  }
+
+  // Çıkış butonu
+  const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+  if(adminLogoutBtn) {
+    adminLogoutBtn.addEventListener('click', () => {
+      hideAdminPanel();
+      alert('Yönetici çıkışı yapıldı.');
+    });
+  }
+
+  // Eğer yukarıdaki elementler henüz yoksa, dinamik olarak event listener
+  document.addEventListener('click', e => {
+    if(e.target && e.target.id === 'adminLogoutBtn') {
+      hideAdminPanel();
+      alert('Yönetici çıkışı yapıldı.');
+    }
+  });
+
+  document.addEventListener('submit', e => {
+    if(e.target && e.target.id === 'adminAddEventForm') {
+      e.preventDefault();
+      if(!isAdminLoggedIn) {
+        alert('Önce giriş yapmalısınız.');
+        return;
+      }
+      const title = document.getElementById('eventTitle').value.trim();
+      const date = document.getElementById('eventDate').value;
+      const description = document.getElementById('eventDescription').value.trim();
+
+      if(!title || !date) {
+        alert('Lütfen etkinlik başlığı ve tarihini girin.');
+        return;
+      }
+
+      let events = getEvents();
+      events.push({ title, date, description });
+      saveEvents(events);
+      loadEventsToAdminList();
+
+      e.target.reset();
+      alert('Etkinlik başarıyla eklendi.');
+    }
+  });
+</script>
+</html>
